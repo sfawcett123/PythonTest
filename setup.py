@@ -1,14 +1,15 @@
 """Setup Python Library"""
 
-import setuptools
 import os
+import setuptools
+
 
 with open("README.md", "r" , encoding="utf-8" ) as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="fs-client-test-lib-" + os.environ['SEMVAR'],
-    version=os.environ['SEMVAR'] , 
+    version=os.environ['SEMVAR'],
     author="Steven Fawcett",
     author_email="Steven.fawcett@me.com",
     description="Flight Simulator Python Interfaces",
