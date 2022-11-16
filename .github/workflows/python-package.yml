@@ -60,6 +60,8 @@ jobs:
     - name: Package
       run: |
         python setup.py sdist bdist_wheel
+      env:
+        SEMVAR: ${{ needs.setup.outputs.semvar }}
 
     - name: Upload Release
       uses: ncipollo/release-action@v1
