@@ -61,14 +61,9 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
 
-    - uses: actions/upload-artifact@v3
-      with:
-        name: fs-client-test-lib-${{matrix.python-version}}
-        path: dist/
-
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: fs-client-test-lib-${{matrix.python-version}}
+        artifacts: dist/*
         tag: ${{ needs.setup.outputs.semvar }}
         allowUpdates: true
