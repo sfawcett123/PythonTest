@@ -10,14 +10,10 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  setup:
+    outputs: 
+         semvar: ${{steps.get_semver.outputs.next_version}} 
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.8", "3.9", "3.10"]
-
     steps:
     - uses: actions/checkout@v3
       with:
@@ -27,7 +23,24 @@ jobs:
       id: get_semver
       with:
         bump_level: "patch"
+        
+    - uses: rickstaa/action-create-tag@v1
+      with:
+        tag: ${{ steps.get_semver.outputs.next_version }}
+        message: "Latest release"
+        force_push_tag: true
+        
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
 
+    steps:
+    - uses: actions/checkout@v3
+        
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -48,12 +61,6 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
 
-    - uses: rickstaa/action-create-tag@v1
-      with:
-        tag: ${{ steps.get_semver.outputs.next_version }}
-        message: "Latest release"
-        force_push_tag: true
-
     - uses: actions/upload-artifact@v3
       with:
         name: fs-client-test-lib
@@ -63,4 +70,4 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: fs-client-test-lib
-        tag: ${{ steps.get_semver.outputs.next_version }}
+        tag: ${{ needs.setup.outputs.semvar }}
