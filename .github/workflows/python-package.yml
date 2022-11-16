@@ -70,5 +70,5 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: fs-client-test-lib-${{matrix.python-version}}
-        tag: ${{ needs.setup.outputs.semva }}
+        tag: ${{ needs.setup.outputs.semvar }}
         allowUpdates: true
