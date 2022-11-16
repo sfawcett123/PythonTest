@@ -63,11 +63,5 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with:
-        name: fs-client-test-lib
+        name: fs-client-test-lib-${{matrix.python-version}}-${{ needs.setup.outputs.semvar }}
         path: dist/
-
-    - name: Upload Release
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: fs-client-test-lib
-        tag: ${{ needs.setup.outputs.semvar }}
