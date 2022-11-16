@@ -8,7 +8,7 @@ with open("README.md", "r" , encoding="utf-8" ) as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="fs-client-test-lib-" + os.environ['SEMVAR'],
+    name="fs-client-test-lib-" + os.environ['PYVER'],
     version=os.environ['SEMVAR'],
     author="Steven Fawcett",
     author_email="Steven.fawcett@me.com",
