@@ -21,6 +21,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - uses: rickstaa/action-get-semver@v1
+      id: get_semver
+      with:
+        bump_level: "patch"
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -31,6 +36,7 @@ jobs:
         python -m pip install --upgrade pip setuptools wheel
         python -m pip install flake8 tqdm
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - name: Lint with flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
@@ -39,3 +45,20 @@ jobs:
     - name: Package
       run: |
         python setup.py sdist bdist_wheel
+
+    - uses: rickstaa/action-create-tag@v1
+      with:
+        tag: ${{ steps.get_semver.outputs.next_version }}
+        message: "Latest release"
+        force_push_tag: true
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: fs-client-test-lib
+        path: dist/
+
+    - name: Upload Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: fs-client-test-lib
+        tag: ${{ steps.get_semver.outputs.next_version }}
