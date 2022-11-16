@@ -2,4 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/slnx.sqlite
+
+.vs
+/dist/fs_client_test_lib-0.0.1-py3-none-any.whl
+/dist/fs-client-test-lib-0.0.1.tar.gz
+/fs_client_test_lib.egg-info/PKG-INFO
+/fs_client_test_lib.egg-info/top_level.txt
+/fs_client_test_lib.egg-info/SOURCES.txt
+/fs_client_test_lib.egg-info/dependency_links.txt
