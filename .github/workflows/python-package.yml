@@ -62,7 +62,8 @@ jobs:
         python setup.py sdist bdist_wheel
       env:
         SEMVAR: ${{ needs.setup.outputs.semvar }}
-
+        PYVER:  ${{ matrix.python-version }}
+        
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
