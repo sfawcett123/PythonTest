@@ -9,7 +9,7 @@ SIM_SERVER_URL = "https://localhost:27464/api/v1/API/register"
 def register():
     """Register with Sim Listener"""
     content = { 'Content-Type': 'application/json' , 'accept': 'text/plain' }
-    rdata = {  "name": "Python Output Test" }
+    rdata = {  "name": "Python Output Test", "Outputs" : ["PLANE LATITUDE"] }
 
     print( "Registration data =" , json.dumps(rdata) )
     try:
@@ -18,7 +18,7 @@ def register():
                                          headers=content,
                                          data=json.dumps(rdata),
                                          verify=False )
-    except requests.exceptions.ConnectionError as e :
+    except requests.exceptions.ConnectionError  :
         print( "Server not ready")
         sys.exit(1)
 
@@ -31,9 +31,9 @@ data = json.dumps(json_data)
 
 # Currently this is running on same server as tcp server.
 host = socket.gethostname() # Get local machine name
-#j = register()
-#port = int(j['Port'])
-port=9000
+j = register()
+port = int(j['Port'])
+#port=9000
 print( f"Connecting on {host}:{port}")
 
 # Initialize a TCP client socket using SOCK_STREAM
